@@ -23,39 +23,39 @@
 			<a href="#menu" class="ui-nodisc-icon ui-alt-icon ui-btn ui-btn-icon-notext ui-icon-bars">no text</a>
 		</div>
 		<div role="main" class="ui-content">
-			<% if(collection.length > 0) { %>
-				<% _.each(collection, function(roll) { %>
-					<div class="ui-corner-all custom-corners dnd-saved-roll">
-						<div class="ui-body ui-body-a dnd-roll-result">
-							<h1><%= roll.DiceRoll.qty + " D" + roll.DiceRoll.d + " " + roll.DiceRoll.symbol + " " + roll.DiceRoll.modifier %></h1>
-						</div>
-						<div class="ui-bar ui-bar-a">
-							<div class="ui-grid-b" data-selectedroll="<%= roll.id %>">
-								<div class="ui-block-a">
-									<a href="#delete" class="ui-nodisc-icon ui-alt-icon ui-btn ui-btn-icon-notext ui-icon-delete">no text</a>
-								</div>
-								<div class="ui-block-b">
-									<p><%= roll.Name %></p>
-								</div>
-								<div class="ui-block-c dnd-right">
-									<a href="#roll" class="ui-shadow ui-btn ui-btn-inline ui-mini ui-corner-all">Roll</a>
-									<a href="#roll-edit" class="ui-nodisc-icon ui-alt-icon ui-btn ui-btn-inline ui-btn-icon-notext ui-icon-bullets">no text</a>
+			<ul data-role="listview" data-count-theme="a">
+				<% if(collection.length > 0) { %>
+					<% _.each(collection, function(roll) { %>
+					
+						<li data-selectedroll="<%= roll.id %>" class="ui-li-has-alt ui-li-has-count dnd-roll-result">
+							<a href="#roll" class="ui-btn">
+								<%= roll.Name + " - " + roll.DiceRoll.qty + " D" + roll.DiceRoll.d + (roll.DiceRoll.modifier != 0 ? " " + roll.DiceRoll.symbol + " " + roll.DiceRoll.modifier : "") %><span class="ui-li-count ui-body-a">-</span></a>
+							<a href="#popup-menu<%= roll.id %>" id="btn-popup" data-rel="popup" class="ui-btn ui-btn-icon-notext ui-icon-carat-d ui-btn-a">no text</a>
+							<div id="popup-menu<%= roll.id %>" data-role="popup" data-shadow="false" class="ui-popup">
+								<div data-role="controlgroup" data-type="horizontal" data-selectedroll="<%= roll.id %>" data-mini="false">
+									<a href="#delete" class="ui-btn ui-btn-icon-notext ui-icon-delete ui-btn-a">no text</a>
+									<a href="#roll-edit" class="ui-btn ui-btn-icon-notext ui-icon-edit ui-btn-a">no text</a>
 								</div>
 							</div>
-						</div>
-					</div>
-				<% }); %>
-			<% } else { %>
+						</li>
+									<!-- <a href="#roll-edit" class="ui-nodisc-icon ui-alt-icon ui-btn ui-btn-inline ui-btn-icon-notext ui-icon-bullets">no text</a> -->
+					<% }); %>
+				<% } else { %>
 				<div class="ui-corner-all custom-corners">
-					<div class="ui-bar ui-bar-a">
-						<h3>Note!</h3>
-					</div>
-					<div class="ui-body ui-body-a">
+					<li>
 						<p>Why dont you save some of your more complicated dice rolls</p>
-					</div>
+					</li>
 				</div>
-			<% } %>
+				<% } %>
+			</ul>
 		</div>
+		
+	</script>
+
+	<!-- Popup Menu -->
+	<script id="popup-menu"type="text/template">
+		
+	<a href="#delete" data-rel="popup"></a>
 	</script>
 	
 	<!-- Delete Roll -->

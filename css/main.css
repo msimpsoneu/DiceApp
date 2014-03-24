@@ -1,17 +1,9 @@
+.ui-controlgroup { margin: 0; }
+
 .dnd-center {
 	text-align: center;
 }
 
 .dnd-right {
 	text-align: right;
-}
-
-.dnd-roll-result {
-	height: 100px;
-	text-align: center;
-	vertical-align: center;
-}
-
-.dnd-saved-roll {
-	padding-bottom: 10px;
 }

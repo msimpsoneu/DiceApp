@@ -44,7 +44,8 @@ window.HomeView = Backbone.View.extend({
 	events: {
 		"click a[href='#delete']":"deleteClicked",
 		"click a[href='#roll']":"rollClicked",
-		"click a[href='#roll-edit']":"editClicked"
+		"click a[href='#roll-edit']":"editClicked",
+		"click a[id='btn-popup']":"menuPopupClicked"
 	},
 
 	initialize: function() {
@@ -52,12 +53,19 @@ window.HomeView = Backbone.View.extend({
 		var self = this;
 		this.collection = StoredRolls;
 		this.collection.fetch().done(function() {self.render();});
+		
 	},
 
 	render: function(event) {
 		// JSONify the collection and use it with the template
 		this.$el.html(this.template({collection: this.collection.toJSON()}));
 		return this;
+	},
+
+	menuPopupClicked: function(event) {
+		var menu = $(event.target.attributes[0].value);
+		menu.popup();
+		menu.popup("open", { positionTo: event.target });
 	},
 
 	editClicked: function(event) {
@@ -78,10 +86,8 @@ window.HomeView = Backbone.View.extend({
 
 	rollClicked: function(event) {
 		// get clicked rolls id from its parent
-		this.rollid = $(event.currentTarget).closest(".ui-grid-b").attr("data-selectedroll");
-
-		// get the H1 that displays the result
-		this.result = $(event.currentTarget).closest(".ui-bar").prev().find("h1");
+		var parent = event.target;
+		this.rollid = $(parent).closest("li").attr("data-selectedroll");
 
 		// set the model as the DiceRoll, not the the StoredRoll itself 
 		this.model = StoredRolls.getByRollId(this.rollid).attributes.DiceRoll;
@@ -90,7 +96,7 @@ window.HomeView = Backbone.View.extend({
 		this.rollResult = this.roll(this.model);
 
 		// display the roll and the resulting total e.g. 2 D6 + 4 = 6
-		$(this.result).html(this.model.qty + "D" + this.model.d + " " + this.model.symbol + " " + this.model.modifier + " = " + this.rollResult);
+		$(parent.firstElementChild).html(this.rollResult);
 	},
 
 	roll: function(roll) {
@@ -257,7 +263,7 @@ var AppRouter = Backbone.Router.extend({
 		console.log('#roll-details');
 
 		// get roll id
-		this.rollid = $("[data-edit='clicked']").closest(".ui-grid-b").attr("data-selectedroll");
+		this.rollid = $("[data-edit='clicked']").closest("div[data-selectedroll]").attr("data-selectedroll");
 
 		// get the model
 		this.model = StoredRolls.getByRollId(this.rollid);
@@ -273,7 +279,7 @@ var AppRouter = Backbone.Router.extend({
 		this.dialog = true;
 
 		// get roll id
-		this.rollid = $("[data-delete='clicked']").closest(".ui-grid-b").attr("data-selectedroll");
+		this.rollid = $("[data-delete='clicked']").closest("div[data-selectedroll]").attr("data-selectedroll");
 
 		// get the model
 		this.model = StoredRolls.getByRollId(this.rollid);
