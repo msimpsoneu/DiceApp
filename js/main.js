@@ -9,12 +9,19 @@ var DiceRoll = Backbone.Model.extend({
 });
 
 var StoredRoll = Backbone.Model.extend({
+
 	defaults: function() {
 		var diceRoll = new DiceRoll;
+		diceRoll = diceRoll.toJSON();
 		return {
 			"Name": "new roll",
-			"DiceRoll": diceRoll.toJSON()
+			"DiceRoll": diceRoll,
+			"DiceRollText": this.diceRollText(diceRoll)
 		};
+	},
+
+	diceRollText: function(diceRoll) {
+		return diceRoll.qty + " D" + diceRoll.d + (diceRoll.modifier != 0 ? " " + diceRoll.symbol + " " + diceRoll.modifier : "");
 	},
 
 	// reference so changes to model are reflected in localStorage
@@ -191,8 +198,11 @@ window.RollDetailsView = Backbone.View.extend({
 			"modifier": $("[name='txt-modifier']").val(), 
 		});
 
+		// JSONify the DiceRoll
+		this.diceRoll = this.diceRoll.toJSON();
+
 		// populate and save the model
-		this.model.save({"Name": $("[name='txt-name']").val(), "DiceRoll": this.diceRoll.toJSON(), "id": this.model.id});
+		this.model.save({"Name": $("[name='txt-name']").val(), "DiceRoll": this.diceRoll, "DiceRollText": this.model.diceRollText(this.diceRoll), "id": this.model.id});
 	},
 
 	// refresh form values

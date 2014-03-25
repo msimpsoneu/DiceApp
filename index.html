@@ -29,7 +29,7 @@
 					
 						<li data-selectedroll="<%= roll.id %>" class="ui-li-has-alt ui-li-has-count dnd-roll-result">
 							<a href="#roll" class="ui-btn">
-								<%= roll.Name + " - " + roll.DiceRoll.qty + " D" + roll.DiceRoll.d + (roll.DiceRoll.modifier != 0 ? " " + roll.DiceRoll.symbol + " " + roll.DiceRoll.modifier : "") %><span class="ui-li-count ui-body-a">-</span></a>
+								<%= roll.DiceRollText %><span class="ui-li-count ui-body-a">-</span></a>
 							<a href="#popup-menu<%= roll.id %>" id="btn-popup" data-rel="popup" class="ui-btn ui-btn-icon-notext ui-icon-carat-d ui-btn-a">no text</a>
 							<div id="popup-menu<%= roll.id %>" data-role="popup" data-shadow="false" class="ui-popup">
 								<div data-role="controlgroup" data-type="horizontal" data-selectedroll="<%= roll.id %>" data-mini="false">
