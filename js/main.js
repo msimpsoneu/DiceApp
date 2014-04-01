@@ -5,7 +5,7 @@ var storedRolls = new Backbone.LocalStorage("StoredRolls");
 
 // Models
 var DiceRoll = Backbone.Model.extend({
-	defaults: {"qty": 1,"d": 6,"symbol": "plus","modifier": 0}
+	defaults: {"qty": "","d": "","symbol": "plus","modifier": ""}
 });
 
 var StoredRoll = Backbone.Model.extend({
@@ -14,7 +14,7 @@ var StoredRoll = Backbone.Model.extend({
 		var diceRoll = new DiceRoll;
 		diceRoll = diceRoll.toJSON();
 		return {
-			"Name": "new roll",
+			"Name": "",
 			"DiceRoll": diceRoll,
 			"DiceRollText": this.diceRollText(diceRoll)
 		};
@@ -169,7 +169,7 @@ window.QuickRollView = Backbone.View.extend({
 		console.log("D" + this.d);
 
 		// roll a single die of d sides
-		$('.dnd-roll-result').find("h1").html("1D" + this.d + " = " + Math.floor((Math.random()*this.d)+1));
+		$(event.target.firstElementChild).html(Math.floor((Math.random()*this.d)+1));
 	}
 });
 
@@ -193,7 +193,7 @@ window.RollDetailsView = Backbone.View.extend({
 		// populate the DiceRoll
 		this.diceRoll = new DiceRoll({ 
 			"qty": $("[name='txt-qty']").val(), 
-			"d": $("[name='radio-d']:checked").val(), 
+			"d": $("[name='select-dice']").val(), 
 			"symbol": $("[name='radio-symbol']:checked").val(), 
 			"modifier": $("[name='txt-modifier']").val(), 
 		});
@@ -210,7 +210,6 @@ window.RollDetailsView = Backbone.View.extend({
 		$("[name='txt-name']").textinput("refresh");
 		$("[name='txt-qty']").textinput("refresh");
 		$("[name='txt-modifier']").textinput("refresh");
-		$("[name='radio-d']:checked").checkboxradio("refresh");
 		$("[name='radio-symbol']").checkboxradio("refresh");
 	},
 

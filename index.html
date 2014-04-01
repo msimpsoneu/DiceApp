@@ -23,13 +23,12 @@
 			<a href="#menu" class="ui-nodisc-icon ui-alt-icon ui-btn ui-btn-icon-notext ui-icon-bars">no text</a>
 		</div>
 		<div role="main" class="ui-content">
-			<ul data-role="listview" data-count-theme="a">
-				<% if(collection.length > 0) { %>
+			<% if(collection.length > 0) { %>
+				<ul data-role="listview" data-count-theme="a">
 					<% _.each(collection, function(roll) { %>
-					
 						<li data-selectedroll="<%= roll.id %>" class="ui-li-has-alt ui-li-has-count dnd-roll-result">
 							<a href="#roll" class="ui-btn">
-								<%= roll.DiceRollText %><span class="ui-li-count ui-body-a">-</span></a>
+								<%= roll.Name %>: <%= roll.DiceRollText %><span class="ui-li-count ui-body-a">-</span></a>
 							<a href="#popup-menu<%= roll.id %>" id="btn-popup" data-rel="popup" class="ui-btn ui-btn-icon-notext ui-icon-carat-d ui-btn-a">no text</a>
 							<div id="popup-menu<%= roll.id %>" data-role="popup" data-shadow="false" class="ui-popup">
 								<div data-role="controlgroup" data-type="horizontal" data-selectedroll="<%= roll.id %>" data-mini="false">
@@ -38,18 +37,13 @@
 								</div>
 							</div>
 						</li>
-									<!-- <a href="#roll-edit" class="ui-nodisc-icon ui-alt-icon ui-btn ui-btn-inline ui-btn-icon-notext ui-icon-bullets">no text</a> -->
 					<% }); %>
-				<% } else { %>
-				<div class="ui-corner-all custom-corners">
-					<li>
-						<p>Why dont you save some of your more complicated dice rolls</p>
-					</li>
-				</div>
-				<% } %>
-			</ul>
-		</div>
-		
+			<% } else { %>
+				<ul data-role="listview">
+					<li class="indent">Add some rolls from the menu.</li>
+			<% } %>
+				</ul>
+		</div>	
 	</script>
 
 	<!-- Popup Menu -->
@@ -76,24 +70,33 @@
 			<h1>Quick Roll</h1>
 			<a href="#" class="ui-nodisc-icon ui-alt-icon ui-btn ui-btn-icon-notext ui-icon-carat-l">no text</a>
 		</div>
-		<div role="main" class="ui-content dnd-center">
-			<div class="ui-body ui-body-a ui-corner-all dnd-roll-result">
-				<h1></h1>
-			</div>
-			<form>
-				<fieldset data-role="controlgroup" data-type="horizontal">
-					<a href="#quick-roll" data-d="4" class="ui-shadow ui-btn ui-corner-all ui-btn-a">D4</a>
-					<a href="#quick-roll" data-d="6" class="ui-shadow ui-btn ui-corner-all ui-btn-a">D6</a>
-					<a href="#quick-roll" data-d="8" class="ui-shadow ui-btn ui-corner-all ui-btn-a">D8</a>
-					<a href="#quick-roll" data-d="10" class="ui-shadow ui-btn ui-corner-all ui-btn-a">D10</a>
-					<a href="#quick-roll" data-d="12" class="ui-shadow ui-btn ui-corner-all ui-btn-a">D12</a>
-					<a href="#quick-roll" data-d="20" class="ui-shadow ui-btn ui-corner-all ui-btn-a">D20</a>
-					<a href="#quick-roll" data-d="100" class="ui-shadow ui-btn ui-corner-all ui-btn-a">D100</a>
-				</fieldset>
-			</form>
+		<div role="main" class="ui-content">
+			<ul data-role="listview" data-count-theme="a">
+				<li class="ui-li-has-count">
+					<a href="#quick-roll" data-d="4" class="ui-btn">D4<span class="ui-li-count ui-body-a">-</span></a>
+				</li>
+				<li class="ui-li-has-count">
+					<a href="#quick-roll" data-d="6" class="ui-btn">D6<span class="ui-li-count ui-body-a">-</span></a>
+				</li>
+				<li class="ui-li-has-count">
+					<a href="#quick-roll" data-d="8" class="ui-btn">D8<span class="ui-li-count ui-body-a">-</span></a>
+				</li>
+				<li class="ui-li-has-count">
+					<a href="#quick-roll" data-d="10" class="ui-btn">D10<span class="ui-li-count ui-body-a">-</span></a>
+				</li>
+				<li class="ui-li-has-count">
+					<a href="#quick-roll" data-d="12" class="ui-btn">D12<span class="ui-li-count ui-body-a">-</span></a>
+				</li>
+				<li class="ui-li-has-count">
+					<a href="#quick-roll" data-d="20" class="ui-btn">D20<span class="ui-li-count ui-body-a">-</span></a>
+				</li>
+				<li class="ui-li-has-count">
+					<a href="#quick-roll" data-d="100" class="ui-btn">D100<span class="ui-li-count ui-body-a">-</span></a>
+				</li>
+			</ul>
 		</div>
 	</script>
-
+	
 	<!-- Roll Details -->
 	<script id="roll-details" type="text/template">
 		<div data-role="header">
@@ -102,34 +105,27 @@
 		</div>
 		<div role="main" class="ui-content">
 			<form>
-				<label for="txt-name">Name</label>
-				<input type="text" data-clear-btn="true", name="txt-name" value="<%= Name %>">
-				<label for="txt-qty">Quantity</label>
-				<input type="number" data-clear-btn="true", name="txt-qty" value="<%= DiceRoll.qty %>">
-				<fieldset class="dnd-center" data-role="controlgroup" data-type="horizontal">
-					<input type="radio" name="radio-d" id="radio-d4" value="4" <% if(DiceRoll.d == 4){ %>checked="checked" <% } %>>
-					<label for="radio-d4">D4</label>
-					<input type="radio" name="radio-d" id="radio-d6" value="6" <% if(DiceRoll.d == 6){ %>checked="checked" <% } %>>
-					<label for="radio-d6">D6</label>
-					<input type="radio" name="radio-d" id="radio-d8" value="8" <% if(DiceRoll.d == 8){ %>checked="checked" <% } %>>
-					<label for="radio-d8">D8</label>
-					<input type="radio" name="radio-d" id="radio-d10" value="10" <% if(DiceRoll.d == 10){ %>checked="checked" <% } %>>
-					<label for="radio-d10">D10</label>
-					<input type="radio" name="radio-d" id="radio-d12" value="12" <% if(DiceRoll.d == 12){ %>checked="checked" <% } %>>
-					<label for="radio-d12">D12</label>
-					<input type="radio" name="radio-d" id="radio-d20" value="20" <% if(DiceRoll.d == 20){ %>checked="checked" <% } %>>
-					<label for="radio-d20">D20</label>
-					<input type="radio" name="radio-d" id="radio-d100" value="100" <% if(DiceRoll.d == 100){ %>checked="checked" <% } %>>
-					<label for="radio-d100">D100</label>
-				</fieldset>
+				<label for="txt-name" class="ui-hidden-accessible">Name</label>
+				<input type="text" data-clear-btn="true", name="txt-name" value="<%= Name %>" placeholder="Name">
+				<label for="txt-qty" class="ui-hidden-accessible">Quantity</label>
+				<input type="number" data-clear-btn="true", name="txt-qty" value="<%= DiceRoll.qty %>" placeholder="Quantity">
+				<select name="select-dice">
+					<option value="4" <% if(DiceRoll.d == 4){ %> selected="selected" <% } %>>D4</option>
+					<option value="6" <% if(DiceRoll.d == 6){ %> selected="selected" <% } %>>D6</option>
+					<option value="8" <% if(DiceRoll.d == 8){ %> selected="selected" <% } %>>D8</option>
+					<option value="10" <% if(DiceRoll.d == 10){ %> selected="selected" <% } %>>D10</option>
+					<option value="12" <% if(DiceRoll.d == 12){ %> selected="selected" <% } %>>D12</option>
+					<option value="20" <% if(DiceRoll.d == 20){ %> selected="selected" <% } %>>D20</option>
+					<option value="100" <% if(DiceRoll.d == 100){ %> selected="selected" <% } %>>D100</option>
+				</select>
 				<fieldset class="dnd-center" data-role="controlgroup" data-type="horizontal">
 					<input type="radio" name="radio-symbol" id="radio-minus" value="minus"<% if(DiceRoll.symbol == "minus"){ %>checked="checked" <% } %>>
 					<label for="radio-minus">minus</label>
 					<input type="radio" name="radio-symbol" id="radio-plus" value="plus"<% if(DiceRoll.symbol == "plus"){ %>checked="checked" <% } %>>
 					<label for="radio-plus">plus</label>
 				</fieldset>
-				<label for="txtModifier">Modifier</label>
-				<input type="number" data-clear-btn="true", name="txt-modifier" value="<%= DiceRoll.modifier %>">
+				<label for="txtModifier" class="ui-hidden-accessible">Modifier</label>
+				<input type="number" data-clear-btn="true", name="txt-modifier" value="<%= DiceRoll.modifier %>" placeholder="Modifier">
 				<a href="#" data-role="button" class="save ui-shadow ui-btn ui-corner-all">Confirm</button></a>
 			</form>
 		</div>
