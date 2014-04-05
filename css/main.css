@@ -1,3 +1,7 @@
+@import url(http://fonts.googleapis.com/css?family=Tinos);
+
+.company { font-family: 'Tinos', serif; font-weight: bold; }
+
 .ui-controlgroup { margin: 0; }
 
 .dnd-center {
@@ -7,3 +11,5 @@
 .dnd-right {
 	text-align: right;
 }
+
+.ui-header .ui-title { margin-left: 1em; margin-right: 1em; }

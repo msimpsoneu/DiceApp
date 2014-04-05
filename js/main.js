@@ -133,6 +133,15 @@ window.HomeView = Backbone.View.extend({
 	}
 });
 
+window.AboutView =  Backbone.View.extend({
+	template: _.template($('#about').html()),
+
+	render: function(event) {
+		this.$el.html(this.template);
+		return this;
+	}
+});
+
 window.DeleteRollView = Backbone.View.extend({
 	events:{
 		"click a[href='#deleted']":"deletedClicked"
@@ -207,9 +216,27 @@ window.RollDetailsView = Backbone.View.extend({
 
 	// refresh form values
 	refreshForm: function() {
-		$("[name='txt-name']").textinput("refresh");
-		$("[name='txt-qty']").textinput("refresh");
-		$("[name='txt-modifier']").textinput("refresh");
+		var txtName = $("[name='txt-name']");
+		var txtQty = $("[name='txt-qty']");
+		var txtModifier = $("[name='txt-modifier']");
+
+		// check for empty textboxes
+		if(txtName.val() == "") {
+			txtName.val("new roll");
+		}
+
+		if(txtQty.val() == "" || txtQty.val() == "0") {
+			txtQty.val("1");
+		}
+
+		if(txtModifier.val() == "") {
+			txtModifier.val("0");
+		}
+
+		// refresh the inputs
+		txtName.textinput("refresh");
+		txtQty.textinput("refresh");
+		txtModifier.textinput("refresh");
 		$("[name='radio-symbol']").checkboxradio("refresh");
 	},
 
@@ -231,7 +258,8 @@ var AppRouter = Backbone.Router.extend({
 		"roll-edit":"rollEdit",
 		"roll-new":"rollNew",
 		"delete":"deleteRoll",
-		"deleted":"home"
+		"deleted":"home",
+		"about":"about",
 	},
 
 	initialize: function () {
@@ -279,6 +307,16 @@ var AppRouter = Backbone.Router.extend({
 
 		// change the page
 		this.changePage(new RollDetailsView({model: this.model}));
+	},
+
+	about: function() {
+		console.log("#about");
+
+		// is dialog
+		this.dialog = true;
+
+		// change the page
+		this.changePage(new AboutView());
 	},
 
 	deleteRoll: function() {

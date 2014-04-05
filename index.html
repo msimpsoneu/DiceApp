@@ -15,12 +15,13 @@
 		<div id="menu" data-role="panel" data-display="overlay">
 			<ul data-role="listview">
 				<li><a href="#quick-roll" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Quick Roll</a></li>
-				<li><a id="newroll" href="#roll-new" class="ui-btn ui-btn-icon-right ui-icon-plus">Add Roll</a></li>
+				<li><a id="newroll" href="#roll-new" class="ui-btn ui-btn-icon-right ui-icon-plus">New Roll</a></li>
+				<li><a href="#about" class="ui-btn ui-btn-icon-right ui-icon-info">About</a></li>
 			</ul>
 		</div>
 		<div data-role="header">
-			<h1>Dungeons &amp; Dice</h1>
 			<a href="#menu" class="ui-nodisc-icon ui-alt-icon ui-btn ui-btn-icon-notext ui-icon-bars">no text</a>
+			<h1>Dungeons &amp; Dice</h1>
 		</div>
 		<div role="main" class="ui-content">
 			<% if(collection.length > 0) { %>
@@ -40,18 +41,25 @@
 					<% }); %>
 			<% } else { %>
 				<ul data-role="listview">
-					<li class="indent">Add some rolls from the menu.</li>
+					<li>Add some rolls from the menu.</li>
 			<% } %>
 				</ul>
 		</div>	
 	</script>
-
-	<!-- Popup Menu -->
-	<script id="popup-menu"type="text/template">
-		
-	<a href="#delete" data-rel="popup"></a>
-	</script>
 	
+	<!-- About -->
+	<script id="about" type="text/template">
+		<div data-role="header">
+			<h1>About</h1>
+			<a href="#" class="ui-nodisc-icon ui-alt-icon ui-btn ui-btn-icon-notext ui-icon-carat-l">no text</a>
+		</div>
+		<div role="main" class="ui-content dnd-center company">
+			<h2>Not to Scale Studio.</h2>
+			<p>&copy; Copyright 2014.</p>
+			<p>All rights reserved. Source code licenced under MIT licence.</p>
+		</div>
+	</script>
+
 	<!-- Delete Roll -->
 	<script id="delete-roll" type="text/template">
 		<div data-role="header">
